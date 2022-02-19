@@ -1,0 +1,3 @@
+---
+- import_tasks: precheck.yml
+- include_tasks: "download_and_install.yml"

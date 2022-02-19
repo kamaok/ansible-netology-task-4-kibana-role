@@ -1,0 +1,17 @@
+---
+- name: "Download Kibana's rpm"
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/kibana/kibana-{{ elk_stack_version }}-x86_64.rpm"
+    dest: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
+  register: download_kibana
+  until: download_kibana is succeeded
+- name: Install Kibana
+  yum:
+    name: "/tmp/kibana-{{ elk_stack_version }}-x86_64.rpm"
+    state: present
+- name: Configure Kibana
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+    mode: 0664
+  notify: restart Kibana
