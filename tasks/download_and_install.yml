@@ -14,4 +14,6 @@
     src: kibana.yml.j2
     dest: /etc/kibana/kibana.yml
     mode: 0664
-  notify: restart Kibana
+  notify:
+    - restart Kibana
+    - start Kibana

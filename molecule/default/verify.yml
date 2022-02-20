@@ -1,0 +1,14 @@
+---
+- name: Check is Kibana is started
+  hosts: kibana-instance
+  gather_facts: true
+  tasks:
+  - name: Get status code Kibana
+    shell:  'curl -s -I  http://localhost:5601 | grep HTTP | grep 302 | wc -l'
+    register: get_status_code_kibana
+  - name: Check Kibana status code
+    assert:
+      that: get_status_code_kibana.stdout == '1'
+      fail_msg: "'get_status_code_kibana' is not equal 1"
+      success_msg: "'get_status_code_kibana' is equal 1"
+
